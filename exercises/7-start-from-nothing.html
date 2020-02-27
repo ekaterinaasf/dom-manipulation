@@ -45,13 +45,8 @@
           const h2El = document.createElement("h2");
           h2El.innerText = "a list of things";
           replication.appendChild(h2El);
-          //create a
-          const aEl = document.createElement("a");
-          aEl.innerText = "learn about badgers";
-          aEl.href = "https://www.badgerbadgerbadger.com";
-          aEl.target = "_blank";
           //create ul
-          const things = ["robots", "solar systems", aEl, "oil"];
+          const things = ["robots", "solar systems", "", "oil"];
           const ulEl = document.createElement("ul");
           ulEl.start = "0";
           for (let thing of things) {
@@ -60,6 +55,12 @@
             ulEl.appendChild(newLi);
           }
           replication.appendChild(ulEl);
+          //create a
+          const aEl = document.createElement("a");
+          aEl.innerText = "learn about badgers";
+          aEl.href = "https://www.badgerbadgerbadger.com";
+          aEl.target = "_blank";
+          ulEl.children[2].appendChild(aEl);
 
           // write me! (... without using cloneNode, that's kind of cheating)
         </script>
