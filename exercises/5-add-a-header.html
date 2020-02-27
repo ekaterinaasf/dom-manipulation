@@ -1,75 +1,80 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
 
-<head>
-  <meta charset="utf-8">
+    <title>add a header</title>
+    <meta name="description" content="add a header" />
 
-  <title>add a header</title>
-  <meta name="description" content="add a header">
+    <link href="../dependencies/mocha/mocha.css" rel="stylesheet" />
+    <script src="../dependencies/mocha/mocha.js"></script>
+    <script src="../dependencies/assert.js"></script>
 
-  <link href="../dependencies/mocha/mocha.css" rel="stylesheet" />
-  <script src="../dependencies/mocha/mocha.js"></script>
-  <script src="../dependencies/assert.js"></script>
+    <script src="../dependencies/testTheDom.js"></script>
 
-  <script src="../dependencies/testTheDom.js"></script>
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+  </head>
 
-  <link rel="stylesheet" type="text/css" href="../style.css">
+  <body>
+    <header>
+      <h2>add a header</h2>
+    </header>
 
-</head>
+    <section class="things-to-study">
+      <div id="side to inspect" class="exercise-output">
+        <div id="target">
+          <h1>a list of things</h1>
+          <ul>
+            <li>robots</li>
+            <li>solar systems</li>
+            <li>oil</li>
+          </ul>
+        </div>
 
-<body>
+        <div id="replication">
+          <ul>
+            <li>robots</li>
+            <li>wrong wrong wrong wrong</li>
+            <li>oil</li>
+          </ul>
+        </div>
 
-  <header>
-    <h2>add a header</h2>
-  </header>
+        <script id="DOM manipulation script">
+          const replication = document.getElementById("replication");
+          const ulEl = replication.children[0];
+          ulEl.children[1].innerText = "solar systems";
 
-  <section class='things-to-study'>
-    <div id='side to inspect' class='exercise-output'>
+          const h1El = document.createElement("h1");
+          h1El.innerText = "a list of things";
+          replication.appendChild(h1El);
+          replication.insertBefore(h1El, ulEl);
+          //let insertedNode = parentNode.insertBefore(newNode, referenceNode)
 
-      <div id='target'>
-        <h1>a list of things</h1>
-        <ul>
-          <li>robots</li>
-          <li>solar systems</li>
-          <li>oil</li>
-        </ul>
+          // write me! (... without using cloneNode, that's kind of cheating)
+        </script>
       </div>
 
-      <div id='replication'>
-        <ul>
-          <li>robots</li>
-          <li>wrong wrong wrong wrong</li>
-          <li>oil</li>
-        </ul>
-      </div>
+      <div id="mocha" class="mocha-output"></div>
 
-      <script id='DOM manipulation script'>
-        // write me! (... without using cloneNode, that's kind of cheating)
+      <script id="run the tests!">
+        mocha.setup({
+          ui: "bdd"
+        });
+        compareElements.attributesToTest = [
+          "nodeName",
+          "innerText",
+          "href",
+          "target",
+          "children",
+          "childElementCount"
+        ];
+        compareElements(
+          document.getElementById("replication"),
+          document.getElementById("target")
+        );
+        mocha.run();
       </script>
-
-    </div>
-
-    <div id="mocha" class='mocha-output'></div>
-
-    <script id='run the tests!'>
-      mocha.setup({
-        ui: 'bdd',
-      })
-      compareElements.attributesToTest = [
-        "nodeName", 'innerText', 'href', 'target', 'children', 'childElementCount'
-      ];
-      compareElements(
-        document.getElementById('replication'),
-        document.getElementById('target')
-      );
-      mocha.run();
-    </script>
-
-  </section>
-
-
-
-</body>
-
+    </section>
+  </body>
 </html>

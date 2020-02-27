@@ -1,76 +1,102 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
 
-<head>
-  <meta charset="utf-8">
+    <title>fix the list</title>
+    <meta name="description" content="fix the list" />
 
-  <title>fix the list</title>
-  <meta name="description" content="fix the list">
+    <link href="../dependencies/mocha/mocha.css" rel="stylesheet" />
+    <script src="../dependencies/mocha/mocha.js"></script>
+    <script src="../dependencies/assert.js"></script>
 
-  <link href="../dependencies/mocha/mocha.css" rel="stylesheet" />
-  <script src="../dependencies/mocha/mocha.js"></script>
-  <script src="../dependencies/assert.js"></script>
+    <script src="../dependencies/testTheDom.js"></script>
 
-  <script src="../dependencies/testTheDom.js"></script>
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+  </head>
 
-  <link rel="stylesheet" type="text/css" href="../style.css">
+  <body>
+    <header>
+      <h2>fix the list</h2>
+    </header>
 
-</head>
+    <section class="things-to-study">
+      <div id="side to inspect" class="exercise-output">
+        <div id="target">
+          <h1>a list of things</h1>
+          <ul>
+            <li>robots</li>
+            <li>solar systems</li>
+            <li>oil</li>
+          </ul>
+        </div>
 
-<body>
+        <div id="replication">
+          <ol>
+            <li>robots</li>
+            <li>wrong wrong wrong wrong</li>
+            <li>oil</li>
+            <li>oil</li>
+          </ol>
+        </div>
 
-  <header>
-    <h2>fix the list</h2>
-  </header>
+        <script id="DOM manipulation script">
+          const replication = document.getElementById("replication");
+          const olEl = replication.children[0];
+          //remove 'wrong..' element
+          const liWr = olEl.children[1];
+          olEl.removeChild(liWr);
+          //correct second element
+          olEl.children[1].innerText = "solar systems";
+          //add h1 before
+          const h1El = document.createElement("h1");
+          h1El.innerText = "a list of things";
+          replication.appendChild(h1El);
+          replication.insertBefore(h1El, olEl);
+          //replace ol by ul
+          const ulEl = document.createElement("ul");
+          const things = ["robots", "solar systems", "oil"];
+          for (let i = 0; i < things.length; i++) {
+            ulEl.children[i].innerText = things[i];
+          }
 
-  <section class='things-to-study'>
-    <div id='side to inspect' class='exercise-output'>
+          //olEl.replaceWith(ulEl);
+          replication.replaceChild(olEl, ulEl);
 
-      <div id='target'>
-        <h1>a list of things</h1>
-        <ul>
-          <li>robots</li>
-          <li>solar systems</li>
-          <li>oil</li>
-        </ul>
+          /*
+          const numChildren = ulEl.children.length;
+          for (let i = 0; i < numChildren; i++) {
+            const nextChild = ulEl.children[i].cloneNode(true);
+            ulEl.appendChild(nextChild);
+          }
+
+          */
+
+          // write me! (... without using cloneNode, that's kind of cheating)
+        </script>
       </div>
 
-      <div id='replication'>
-        <ol>
-          <li>robots</li>
-          <li>wrong wrong wrong wrong</li>
-          <li>oil</li>
-          <li>oil</li>
-        </ol>
-      </div>
+      <div id="mocha" class="mocha-output"></div>
 
-      <script id='DOM manipulation script'>
-        // write me! (... without using cloneNode, that's kind of cheating)
+      <script id="run the tests!">
+        mocha.setup({
+          ui: "bdd"
+        });
+        compareElements.attributesToTest = [
+          "nodeName",
+          "innerText",
+          "href",
+          "target",
+          "children",
+          "childElementCount"
+        ];
+        compareElements(
+          document.getElementById("replication"),
+          document.getElementById("target")
+        );
+        mocha.run();
       </script>
-
-    </div>
-
-    <div id="mocha" class='mocha-output'></div>
-
-    <script id='run the tests!'>
-      mocha.setup({
-        ui: 'bdd',
-      })
-      compareElements.attributesToTest = [
-        "nodeName", 'innerText', 'href', 'target', 'children', 'childElementCount'
-      ];
-      compareElements(
-        document.getElementById('replication'),
-        document.getElementById('target')
-      );
-      mocha.run();
-    </script>
-
-  </section>
-
-
-
-</body>
-
+    </section>
+  </body>
 </html>
